@@ -120,43 +120,63 @@
 	<!-- end breadcrumb section -->
 
 	<!-- camera start-->
-	<html>
-		<body>
-		
-		<video id="video" width="600" height="450" autoplay></video>
-		<button id="snap">Snap Photo</button>
-		<canvas id="canvas" width="600" height="450"></canvas>
-		
-		<script>
-		// Elements for taking the snapshot
-		var video = document.getElementById('video');
-		var canvas = document.getElementById('canvas');
-		var context = canvas.getContext('2d');
-		var snap = document.getElementById('snap');
-		
-		// Get access to the camera!
-		if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-			navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-				video.srcObject = stream;
-				video.play();
-			});
-		}
-		
-		// Trigger photo take
-		snap.addEventListener("click", function() {
-			context.drawImage(video, 0, 0, 640, 480);
-			var dataUrl = canvas.toDataURL('image/jpeg');
-			
-			fetch('/predict', {
-				method: 'POST',
-				body: dataUrl
-			}).then(response => response.json())
-			  .then(data => console.log(data));
-		});
-		</script>
-		
-		</body>
-		</html>
+	<div class="container">
+		<div class="row pt-4 pb-4 m-4">
+			<div class="col-6">
+				<div class="card bg-light" style="width: 40rem;">
+					<h5 class="card-header">CHECK</h5>
+						<div class="card-body">
+							<video id="video" width="500" height="350" autoplay></video>
+							<button type="button" class="btn btn-success m-2" id="snap">Snap Photo</button>
+							<canvas id="canvas" width="5000" height="350"></canvas>
+							<script>
+							// Elements for taking the snapshot
+							var video = document.getElementById('video');
+							var canvas = document.getElementById('canvas');
+							var context = canvas.getContext('2d');
+							var snap = document.getElementById('snap');
+							// Get access to the camera!
+							if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+								navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+									video.srcObject = stream;
+									video.play();
+								});
+							}
+							// Trigger photo take
+							snap.addEventListener("click", function() {
+								context.drawImage(video, 0, 0, 500, 350);
+								var dataUrl = canvas.toDataURL('image/jpeg');
+								
+								fetch('/predict', {
+									method: 'POST',
+									body: dataUrl
+								}).then(response => response.json())
+								.then(data => console.log(data));
+							});
+							</script>
+					</div>
+				</div>
+			<div class="col-6">
+				<div class="card bg-light" style="width: 30rem;">
+					<h5 class="card-header">TABLE DATA</h5>
+						<div class="card-body">
+							
+						</div>
+					</div>
+				</div>
+				<div class="card bg-light" style="width: 30rem;">
+					<h5 class="card-header">CHART DATA</h5>
+						<div class="card-body">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	</body>
+	</html>
 	<!-- camera end-->
 
 	<!-- footer -->
